@@ -194,6 +194,20 @@ iperf_tcp_listen(struct iperf_test *test)
             return -1;
         }
 
+/*        if (test->dont_fragment) {*/
+            abort();
+            printf(stdout, "Dont fragment is on, setting IPPROTO_IP, IP_MTU_DISCOVER, IP_PMTUDISC_DO\n");
+            opt = IP_PMTUDISC_DO;
+            if (setsockopt(s, IPPROTO_IP, IP_MTU_DISCOVER, &opt, sizeof(opt)) < 0) {
+                saved_errno = errno;
+                close(s);
+                freeaddrinfo(res);
+                errno = saved_errno;
+                i_errno = IESETNODELAY;
+                return -1;
+            }
+/*        }*/
+
         if (test->no_delay) {
             opt = 1;
             if (setsockopt(s, IPPROTO_TCP, TCP_NODELAY, &opt, sizeof(opt)) < 0) {

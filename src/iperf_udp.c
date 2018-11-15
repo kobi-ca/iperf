@@ -470,6 +470,8 @@ int
 iperf_udp_connect(struct iperf_test *test)
 {
     int s, buf, sz;
+	int saved_errno;
+	int opt;
 #ifdef SO_RCVTIMEO
     struct timeval tv;
 #endif
@@ -501,7 +503,20 @@ iperf_udp_connect(struct iperf_test *test)
 		return rc;
 	}
     }
-	
+/*
+	if (test->dont_fragment) {
+        abort();
+		printf("Dont fragment is on, setting IPPROTO_IP, IP_MTU_DISCOVER, IP_PMTUDISC_DO\n");
+		opt = IP_PMTUDISC_DO;
+		if (setsockopt(s, IPPROTO_IP, IP_MTU_DISCOVER, &opt, sizeof(opt)) < 0) {
+			saved_errno = errno;
+			close(s);
+			errno = saved_errno;
+			i_errno = IESETNODELAY;
+			return -1;
+		}
+	}
+*/
 #if defined(HAVE_SO_MAX_PACING_RATE)
     /* If socket pacing is available and not disabled, try it. */
     if (test->settings->fqrate) {

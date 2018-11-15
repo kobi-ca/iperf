@@ -746,6 +746,7 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
         {"cport", required_argument, NULL, OPT_CLIENT_PORT},
         {"set-mss", required_argument, NULL, 'M'},
         {"no-delay", no_argument, NULL, 'N'},
+        {"dont-fragment", no_argument, NULL, OPT_DONT_FRAGMENT},
         {"version4", no_argument, NULL, '4'},
         {"version6", no_argument, NULL, '6'},
         {"tos", required_argument, NULL, 'S'},
@@ -963,6 +964,9 @@ iperf_parse_arguments(struct iperf_test *test, int argc, char **argv)
                 break;
             case OPT_CLIENT_PORT:
                 test->bind_port = atoi(optarg);
+                break;
+            case OPT_DONT_FRAGMENT:
+                test->dont_fragment = 1;
                 break;
             case 'M':
                 test->settings->mss = atoi(optarg);

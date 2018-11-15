@@ -71,6 +71,7 @@ struct iperf_time;
 #define OPT_CONNECT_TIMEOUT 17
 #define OPT_REPEATING_PAYLOAD 18
 #define OPT_EXTRA_DATA 19
+#define OPT_DONT_FRAGMENT 20
 
 /* states */
 #define TEST_START 1

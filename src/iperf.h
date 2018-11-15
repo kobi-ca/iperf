@@ -276,6 +276,7 @@ struct iperf_test
 #endif // HAVE_SSL
 
     /* boolean variables for Options */
+    int       dont_fragment;                    /* --dont-fragment option */
     int       daemon;                           /* -D option */
     int       one_off;                          /* -1 option */
     int       no_delay;                         /* -N option */
